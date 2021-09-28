@@ -15,7 +15,7 @@ Content-Type: application/json
 ]
 
 ###
-GET http://localhost:8080/strings
+GET http://localhost:8080/stringscount
 
 ###
 GET http://localhost:8080/substrings?str=tr
