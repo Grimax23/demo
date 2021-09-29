@@ -79,7 +79,7 @@ class StringControllerTest {
     void getStringsCount() throws Exception {
         when(repository.count()).thenReturn(0L);
 
-        mvc.perform(get("/stringscount"))
+        mvc.perform(get("/count"))
                 .andDo(print())
                 .andExpect(status().isOk());
     }
