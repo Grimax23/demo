@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.repository;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,9 +12,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ExtendWith(MockitoExtension.class)
-class InMemoryStringRepositoryTest {
+class InMemoryStringRepositoryImplTest {
     @InjectMocks
-    private InMemoryStringRepository repository;
+    private InMemoryStringRepositoryImpl repository;
 
     @Test
     void save() {
@@ -51,14 +51,14 @@ class InMemoryStringRepositoryTest {
     }
 
     @Test
-    void size() {
+    void count() {
         repository.save(Arrays.asList("Str1", "Str2", "Str3"));
-        assertEquals(3,repository.size());
+        assertEquals(3,repository.count());
     }
 
     @Test
     void getAll() {
         repository.save(Arrays.asList("Str1", "Str2", "Str3"));
-        assertEquals(3,repository.size());
+        assertEquals(3,repository.count());
     }
 }

@@ -1,5 +1,6 @@
-package com.example.demo;
+package com.example.demo.controller;
 
+import com.example.demo.repository.InMemoryStringRepositoryImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ class StringControllerTest {
     private MockMvc mvc;
 
     @MockBean
-    private InMemoryStringRepository repository;
+    private InMemoryStringRepositoryImpl repository;
 
     @Test
     void addStrings() throws Exception {
@@ -76,7 +77,7 @@ class StringControllerTest {
 
     @Test
     void getStringsCount() throws Exception {
-        when(repository.size()).thenReturn(0);
+        when(repository.count()).thenReturn(0L);
 
         mvc.perform(get("/stringscount"))
                 .andDo(print())

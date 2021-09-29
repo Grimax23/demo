@@ -1,9 +1,11 @@
-package com.example.demo;
+package com.example.demo.controller;
 
+import com.example.demo.repository.InMemoryStringRepositoryImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.demo.ValidationUtils.*;
@@ -11,9 +13,9 @@ import static com.example.demo.ValidationUtils.*;
 @RestController
 public class StringController {
 
-    private final InMemoryStringRepository repository;
+    private final InMemoryStringRepositoryImpl repository;
 
-    public StringController(InMemoryStringRepository repository) {
+    public StringController(InMemoryStringRepositoryImpl repository) {
         this.repository = repository;
     }
 
@@ -33,17 +35,22 @@ public class StringController {
     @GetMapping("/substrings")
     public ResponseEntity<List<String>> getByStringPattern(@RequestParam(name = "str") String str) {
         if (!isValidPattern(str)) return new ResponseEntity("Parameter str is invalid", HttpStatus.BAD_REQUEST);
-        List<String> list = repository.findByStringPattern(str);
-        if (!list.isEmpty()) {
-            return new ResponseEntity(list, HttpStatus.OK);
-        } else {
+        List<String> foundStrings;
+        try {
+            foundStrings  = repository.findByStringPattern(str);
+        }catch (IllegalStateException ex){
+            return new ResponseEntity("Parameter str is invalid", HttpStatus.BAD_REQUEST);
+        }
+        if (foundStrings.isEmpty()) {
             return new ResponseEntity(str, HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity(foundStrings, HttpStatus.OK);
         }
     }
 
-    @GetMapping("/stringscount")
-    public Integer getStringsCount() {
-        return repository.size();
+    @GetMapping("/count")
+    public ResponseEntity getStringsCount() {
+        return new ResponseEntity(repository.count(), HttpStatus.OK);
     }
 
     @GetMapping("/strings")

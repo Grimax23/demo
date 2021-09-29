@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.repository;
 
 import org.springframework.stereotype.Repository;
 
@@ -10,7 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import static com.example.demo.ValidationUtils.*;
 
 @Repository
-public class InMemoryStringRepository {
+public class InMemoryStringRepositoryImpl implements InMemoryStringRepository {
     private Set<String> storageSet = ConcurrentHashMap.newKeySet();
 
     public List<String> save(List<String> newStrings) {
@@ -25,7 +25,7 @@ public class InMemoryStringRepository {
     }
 
     public List<String> findByStringPattern(String pattern) {
-        if (!isValidPattern(pattern)) throw new RuntimeException("Pattern is invalid");
+        if (!isValidPattern(pattern)) throw new IllegalStateException("Pattern is invalid");
         List<String> list = new ArrayList<>();
         for (String str : storageSet) {
             if (str.contains(pattern)) {
@@ -35,7 +35,7 @@ public class InMemoryStringRepository {
         return list;
     }
 
-    public Integer size() {
+    public long count() {
         return storageSet.size();
     }
 
