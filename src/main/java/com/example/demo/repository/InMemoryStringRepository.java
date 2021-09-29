@@ -10,4 +10,6 @@ public interface InMemoryStringRepository {
 
     long count();
 
+    List<String> getAll();
+
 }

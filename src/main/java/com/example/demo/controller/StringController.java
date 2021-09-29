@@ -1,19 +1,20 @@
 package com.example.demo.controller;
 
+import com.example.demo.repository.InMemoryStringRepository;
 import com.example.demo.repository.InMemoryStringRepositoryImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.demo.ValidationUtils.*;
+import static com.example.demo.ValidationUtils.isValidContent;
+import static com.example.demo.ValidationUtils.isValidPattern;
 
 @RestController
 public class StringController {
 
-    private final InMemoryStringRepositoryImpl repository;
+    private final InMemoryStringRepository repository;
 
     public StringController(InMemoryStringRepositoryImpl repository) {
         this.repository = repository;
